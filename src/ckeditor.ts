@@ -10,7 +10,6 @@ import { defineComponent, h, markRaw, type PropType } from 'vue';
 import type { Editor, EditorConfig } from '@ckeditor/ckeditor5-core';
 
 const SAMPLE_READ_ONLY_LOCK_ID = 'Integration Sample';
-const INPUT_EVENT_DEBOUNCE_WAIT = 300;
 
 export interface CKEditorComponentData {
 	instance: Editor | null;
@@ -49,6 +48,10 @@ export default defineComponent( {
 		disableTwoWayDataBinding: {
 			type: Boolean,
 			default: false
+		},
+		saveDebounce: {
+			type: Number,
+			default: 300
 		}
 	},
 
@@ -190,7 +193,7 @@ export default defineComponent( {
 				// The compatibility with the v-model and general Vue.js concept of input–like components.
 				this.$emit( 'update:modelValue', data, evt, editor );
 				this.$emit( 'input', data, evt, editor );
-			}, INPUT_EVENT_DEBOUNCE_WAIT, { leading: true } );
+			}, this.saveDebounce, { leading: true } );
 
 			// Debounce emitting the #input event. When data is huge, instance#getData()
 			// takes a lot of time to execute on every single key press and ruins the UX.
