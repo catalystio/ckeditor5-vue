@@ -152,7 +152,7 @@ export default {
 				// The compatibility with the v-model and general Vue.js concept of input–like components.
 				this.$emit( 'update:modelValue', data, evt, editor );
 				this.$emit( 'input', data, evt, editor );
-			}, INPUT_EVENT_DEBOUNCE_WAIT, { leading: true } );
+			}, editor?.inputDebounceDelay ?? INPUT_EVENT_DEBOUNCE_WAIT, { leading: true } );
 
 			// Debounce emitting the #input event. When data is huge, instance#getData()
 			// takes a lot of time to execute on every single key press and ruins the UX.
